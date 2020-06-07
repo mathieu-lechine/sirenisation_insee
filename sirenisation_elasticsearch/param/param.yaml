@@ -1,0 +1,67 @@
+######################parametres generaux###########################
+tag_demandeur: "Requerant"
+tag_defendeur: "Defendeur"
+tag_Degre_Juridiction: "Degre_Juridiction"
+tag_Numero_Dossier: "Numero_Dossier"
+tag_Date_Lecture: "Date_Lecture"
+
+######################parametres de Elasticsearch###########################
+ES_HOST:
+    host: "localhost"
+    port: 9200
+#ES_HOST: "https://search-es0-7w2lpozpz4zi2mjj3smagvw75m.us-east-1.es.amazonaws.com/"
+INDEX_NAME: 'siren' #'siren_my_bm25'
+TYPE_NAME: 'siren_type'
+size_request: 100
+
+output_columns: 
+    - 'complete_path'
+    - "Degre_Juridiction"
+    - "Numero_Dossier"
+    - "Date_Lecture"
+    - 'defendeur_demandeur'
+    - 'Numero'
+    - 'company_name'
+    - 'company_name_normalized'
+    - 'Number_of_hits'
+    - 'score_0'
+    - 'compt_es'
+    - 'diff_score'
+    - "diff_score_relatif"
+    - "Sirenisation_most_frequent_company"
+    - 'raison_sociale'
+    - 'SIREN'
+    - 'NIC'
+    - 'APET700'
+    - 'LIBNJ'
+    - 'NJ'
+    - 'ADRESSE_COMPLETE'
+    - 'NUMVOIE_pretty'
+    - 'TYPVOIE'
+    - 'LIBVOIE'
+    - 'CODPOS'
+    - 'LIBCOM_pretty'
+
+XML_tags:
+    - 'defendeur_demandeur'
+    - 'Numero'
+    - 'company_name'
+    - 'company_name_normalized'
+    - 'Number_of_hits'
+    - 'score_0'
+    - 'compt_es'
+    - 'diff_score'
+    - "diff_score_relatif"
+    - "Sirenisation_most_frequent_company"
+    - 'raison_sociale'
+    - 'SIREN'
+    - 'NIC'
+    - 'APET700'
+    - 'LIBNJ'
+    - 'NJ'
+    - 'ADRESSE_COMPLETE'
+    - 'NUMVOIE_pretty'
+    - 'TYPVOIE'
+    - 'LIBVOIE'
+    - 'CODPOS'
+    - 'LIBCOM_pretty'
