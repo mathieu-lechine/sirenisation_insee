@@ -1,0 +1,27 @@
+############# Paramètres désormais passés en ligne de commande #############
+########### INPUT
+#dossier contenant les fichiers json de jurisprudence a sireniser
+#input_decision_path: "./Data/decision_jurisprud/"
+#dossier contenant les résultats de la sirenisation INSEE des fichiers de jurisprudence (resultats de 'sirenisation_insee_main.py')
+#csv_siren_path: "./Output/output_siren_csv/"
+#dossier contenant les résultats du web scraping
+#webscraping_results_path: "./Output/ouput_WebScraping/"
+########## OUTPUT
+#dossier dans lequel seront sauvegardés les fichiers json de jurisprudence sirenrisé
+#output_decision_path: "./Output/output_decision_jurisprud/"
+#fichier csv recapitulant les insertions de tags SIREN dans les fichiers json de jurisprudence 
+#output_csv_recap: "./Output/resultat_recap_insertion.csv"
+
+###################### Paramètres généraux ###########################
+
+#liste de couple (nom de la colonne à recuperer, nom du tag en sortie en sortie)
+list_keys_import_export:
+- [Score_Total, Score_Total]
+- [ToExport_APE, APE]
+- [ToExport_APE_format, APE_format]
+- [ToExport_RCS, RCS]
+- [ToExport_RCS_format, RCS_format]
+- [ToExport_SIREN, SIREN]
+- [ToExport_SIREN_format, SIREN_format]
+- [ToExport_SIRET, SIRET]
+- [ToExport_SIRET_format, SIRET_format]

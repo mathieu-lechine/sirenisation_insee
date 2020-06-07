@@ -1,0 +1,83 @@
+version: 1
+disable_existing_loggers: False
+formatters:
+    simple:
+        format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+handlers:
+    console:
+        class: logging.StreamHandler
+        level: DEBUG
+        formatter: simple
+        stream: ext://sys.stdout
+
+    info_file_handler:
+        class: logging.handlers.RotatingFileHandler
+        level: INFO
+        formatter: simple
+        filename: logs/info.log
+        maxBytes: 10485760 # 10MB
+        backupCount: 20
+        encoding: utf8
+
+    error_file_handler:
+        class: logging.handlers.RotatingFileHandler
+        level: ERROR
+        formatter: simple
+        filename: logs/errors.log
+        maxBytes: 10485760 # 10MB
+        backupCount: 20
+        encoding: utf8
+
+loggers:
+    sirenisation_insee_main:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    #dependances sirenisation_insee_main
+    preprocess_siren_db:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    DecisionJurisprudence:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    mapping:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    web_scraping_main:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    #dependances web_scraping_main
+    Scraping:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    Process_scraped_data:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    HandleImportExport:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    add_tag_cctx_main:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    #dependances web_scraping_main
+    core_function:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+    create_csv_recap:
+        level: DEBUG
+        handlers: [console]
+        propagate: no
+
+root:
+    level: INFO
+    handlers: [console, info_file_handler, error_file_handler]

@@ -1,0 +1,155 @@
+############# Paramètres désormais passés en ligne de commande #############
+#dossier contenant les fichiers json de jurisprudence a  sireniser
+#db_decision_jurisprud_path: "./Data/decision_jurisprud/"
+#dossier contenant les bases de donnees SIREN (stock) deja  telechargee
+#siren_data_folder: "./Data/siren_data/"
+#dossier d'output ou seront sauvegarde les fichiers avec les resultats
+#mapping_output_path: "./Output/output_siren_csv/"
+
+###################### Paramètres généraux ###########################
+
+#colonnes à importer du fichier siren STOCK
+column2import: 
+    - SIREN
+    - NIC
+    - NOMEN_LONG
+    - NOM
+    - PRENOM
+    - CIVILITE
+    - ENSEIGNE
+    - APET700
+    - DATEMAJ
+    #ville d'immatriculation
+    - LIBCOM
+    #Adresse
+    - L1_NORMALISEE
+    - L2_NORMALISEE
+    - L3_NORMALISEE
+    - L4_NORMALISEE
+    - L5_NORMALISEE
+    - L6_NORMALISEE
+    - L7_NORMALISEE
+    - NUMVOIE
+    - INDREP
+    - TYPVOIE
+    - LIBVOIE
+    - CODPOS
+    - CEDEX
+    #nature juridique
+    - NJ
+    - LIBNJ
+    
+######################parametres de  mapping: calcul de l'indice de confiance###########################
+#nombre de lignes à extraire de chaque chunk de la base de données
+#dbname: siren
+#user: mathi
+#host: localhost
+#port: 5432
+nb_of_chunks_db: 22
+limit_nb_row_from_chunk: 5000
+
+mapping_raison_sociale:
+    #filtre des lignes avec une distance superieure a  tolerance_distance_Levenshtein
+    tolerance_distance_Levenshtein: 3
+    #filtre des lignes avec une raison sociale dont la difference de longueur est superieure a tolerance_distance_longueur
+    tolerance_distance_longueur: 2
+    #calcul des points de confiance: Max(0; attribution_max_point - alpha * distance_Levenshtein)
+    coefficent_alpha: 5
+    attribution_max_point: 50
+    #Bonus si substring: 
+    bonus_substring: 30
+
+mapping_adresse_complete:
+    #filtre des lignes avec une distance superieure a  tolerance_distance_Levenshtein
+    tolerance_distance_Levenshtein : 10
+    #calcul des points de confiance: Max(0; attribution_max_point - alpha * distance_Levenshtein)
+    coefficent_alpha: 3
+    attribution_max_point: 30
+    
+mapping_ville:
+    #filtre des lignes avec une distance superieure a  tolerance_distance_Levenshtein
+    tolerance_distance_Levenshtein : 10
+    #calcul des points de confiance: Max(0; attribution_max_point - alpha * distance_Levenshtein)
+    coefficent_alpha: 1
+    attribution_max_point: 10
+
+mapping_code_postal:
+    #si matching exacte, alors attribution des points max sinon 0 (hors bonus)
+    attribution_max_point: 5
+    #Bonus si le match est exact sur les deux premiers chiffres
+    bonus_prefix: 3
+    
+mapping_num_rue:
+    #si matching exacte, alors attribution des points max sinon 0 
+    attribution_max_point: 5
+    
+
+######################parametres du format d'output###########################
+#noms des colonnes en sortie et leurs valeurs par défaut
+#La colonne index sera ajouté automatiquement par le programme en première position
+output_column_names_val_defaut:  
+    - [FILENAME,-1]
+    - [NUMERO_ENTREPRISE,-1]
+    - [SIREN,-1]
+    - [NIC,-1]
+    - [L1_NORMALISEE,-1]
+    - [L2_NORMALISEE,-1]
+    - [L3_NORMALISEE,-1]
+    - [L4_NORMALISEE,-1]
+    - [L5_NORMALISEE,-1]
+    - [L6_NORMALISEE,-1]
+    - [L7_NORMALISEE,-1]
+    - [NUMVOIE,-1]
+    - [INDREP,-1]
+    - [TYPVOIE,-1]
+    - [LIBVOIE,-1]
+    - [CODPOS,-1]
+    - [CEDEX,-1]
+    - [LIBCOM,-1]
+    - [ENSEIGNE,-1]
+    - [APET700,-1]
+    - [NOMEN_LONG,-1]
+    - [NOM,-1]
+    - [PRENOM,-1]
+    - [CIVILITE,-1]
+    - [NJ,-1]
+    - [LIBNJ,-1]
+    - [DATEMAJ,-1]
+    - [raison_sociale,-1]
+    - [format_CODPOS,-1]
+    - [LIBCOM_pretty,-1]
+    - [NUMVOIE_pretty,-1]
+    - [NUMVOIE_isempty,-1]
+    - [ADRESSE_COMPLETE,-1]
+    - [raison_sociale_len,-1]
+    - [Levenstein_dist_raison_sociale,-1]
+    - [is_subtring_raison_sociale,-1]
+    - [match_code_postal,-1]
+    - [match_code_postal_prefix,-1]
+    - [Levenstein_dist_ADRESSE_COMPLETE,-1]
+    - [Levenstein_dist_ville,-1]
+    - [match_exact_NUMVOIE,-1]
+    - [Score_mapping_raison_sociale,-1]
+    - [Score_mapping_adresse_complete,-1]
+    - [Score_mapping_ville,-1]
+    - [Score_mapping_code_postal,-1]
+    - [Score_mapping_num_rue,-1]
+    - [Score_Total,-1]
+    - [JsonFeature_adresse_complete,-1]
+    - [JsonFeature_code_postal,-1]
+    - [JsonFeature_demandeur_name,-1]
+    - [JsonFeature_num_rue,-1]
+    - [JsonFeature_raison_sociale,-1]
+    - [JsonFeature_ville,-1]
+    - [ToExport_SIREN,-1]
+    - [ToExport_SIREN_format,-1]
+    - [ToExport_SIRET,-1]
+    - [ToExport_SIRET_format,-1]
+    - [ToExport_RCS,-1]
+    - [ToExport_RCS_format,-1]
+    - [ToExport_APE,-1]
+    - [ToExport_APE_format,-1]
+    
+    
+    
+    

@@ -1,0 +1,120 @@
+############# Paramètres désormais passés en ligne de commande #############
+#dossier contenant les résultats de la sirenisation INSEE des fichiers de jurisprudence (resultats de 'sirenisation_insee_main.py')
+#csv_siren_path: "./Output/output_siren_csv/"
+#dossier dans lequel seront sauvegardes les resultats du webscraping
+#webscraping_results_path: "./Output/ouput_WebScraping/"
+#indice de confiance en-dessous duquel le web scraping est nécessaire
+
+###################### Paramètres généraux ###########################
+seuil_indice_confiance: 50
+
+######################parametres de  web scraping###########################
+#URL du site à web scraper
+racine_url: "https://www.societe.com"
+#template d'URL pour le moteur de recherche de recherche interne du site
+base_requete_url: "https://www.societe.com/cgi-bin/search?champs="
+#nom du premier bloc d'informations (de type 'div monocadre') dans la page des resultats de recherche d'une entreprise
+table_name_rensjur: "rensjur"
+#nom du deuxième bloc d'informations (de type 'div monocadre') dans la page des resultats de recherche d'une entreprise
+table_name_rensjur_complete: "rensjurcomplete"
+#liste des informations à récupérer du premier bloc d'informations (de type 'div monocadre') dans la page des resultats de recherche d'une entreprise
+rensjur:
+    - Dénomination
+    - SIREN
+    - SIRET (siege)
+#liste des informations à récupérer du deuxième bloc d'informations (de type 'div monocadre') dans la page des resultats de recherche d'une entreprise
+rensjurcomplete:
+    - RCS
+    - Adresse
+    - Code postal
+    - Ville
+    - Code APE
+    
+#liste des proxies à utiliser selon le type de requête
+proxies: 
+    http:
+        - "http://10.10.1.10:3128"
+    https:
+        - "http://10.10.1.10:1080" 
+    
+######################parametres de  mapping: calcul de l'indice de confiance###########################
+mapping_raison_sociale:
+    #filtre des lignes avec une distance supérieure à tolerance_distance_Levenshtein
+    tolerance_distance_Levenshtein : 5
+    #calcul des points de confiance: Max(0; attribution_max_point - alpha * distance_Levenshtein)
+    coefficent_alpha: 5
+    attribution_max_point: 50
+    #Bonus si substring: 
+    bonus_substring: 30
+
+mapping_adresse_complete:
+    #filtre des lignes avec une distance supérieure à tolerance_distance_Levenshtein
+    tolerance_distance_Levenshtein : 10
+    #calcul des points de confiance: Max(0; attribution_max_point - alpha * distance_Levenshtein)
+    coefficent_alpha: 3
+    attribution_max_point: 30
+    
+mapping_ville:
+    #filtre des lignes avec une distance supérieure à tolerance_distance_Levenshtein
+    tolerance_distance_Levenshtein : 10
+    #calcul des points de confiance: Max(0; attribution_max_point - alpha * distance_Levenshtein)
+    coefficent_alpha: 1
+    attribution_max_point: 10
+
+mapping_code_postal:
+    #si matching exacte, alors attribution des points max sinon 0 (hors bonus)
+    attribution_max_point: 5
+    #Bonus si le match est exact sur les deux premiers chiffres
+    bonus_prefix: 3
+    
+mapping_num_rue:
+    #si matching exacte, alors attribution des points max sinon 0 
+    attribution_max_point: 5
+    
+    
+######################parametres du format d'output###########################
+#noms des colonnes en sortie
+output_column_names:
+    #numéro de l’entreprise dans le fichier json initial
+    - NUMERO_ENTREPRISE
+    #champs bruts récupérer par web scraping
+    - Dénomination
+    - SIREN 
+    - SIRET (siege)
+    - RCS
+    - Adresse
+    - Code postal
+    - Ville
+    - Code APE
+    #Champs retraités
+    - raison_sociale_ws
+    - format_CODPOS_ws
+    - CODPOS_ws
+    - LIBCOM_ws
+    - NUMVOIE_ws
+    - ADRESSE_COMPLETE_ws
+    #calcul des métriques de correspondance/mappping
+    - Levenstein_dist_raison_sociale
+    - is_subtring_raison_sociale
+    - Levenstein_dist_ADRESSE_COMPLETE
+    - match_code_postal
+    - match_code_postal_prefix
+    - Levenstein_dist_ville
+    - match_exact_NUMVOIE
+    #score pour chaque champs
+    - score_raison_social
+    - score_adresse_complete
+    - score_code_postal
+    - score_ville
+    - score_num_rue
+    - Score_Total
+    #Champs d'export
+    - ToExport_SIREN
+    - ToExport_SIREN_format
+    - ToExport_SIRET
+    - ToExport_SIRET_format
+    - ToExport_RCS
+    - ToExport_RCS_format
+    - ToExport_APE
+    - ToExport_APE_format
+
